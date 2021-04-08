@@ -75,3 +75,6 @@ C:\Users\Sayed\source\repos\ManhaleAspNetCore\bin\Debug\net5.0\Microsoft.AspNetC
 C:\Users\Sayed\source\repos\ManhaleAspNetCore\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\Sayed\source\repos\ManhaleAspNetCore\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Sayed\source\repos\ManhaleAspNetCore\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Sayed\source\repos\ManhaleAspNetCore\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\Sayed\source\repos\ManhaleAspNetCore\obj\Debug\net5.0\Razor\Views\Shared\_LayoutAccount.cshtml.g.cs
+C:\Users\Sayed\source\repos\ManhaleAspNetCore\obj\Debug\net5.0\Razor\Views\Account\Regist.cshtml.g.cs

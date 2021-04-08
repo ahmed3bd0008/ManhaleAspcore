@@ -1,5 +1,7 @@
 using ManhaleAspNetCore.Models;
 using ManhaleAspNetCore.ModelView.Account;
+using ManhaleAspNetCore.Repository;
+using ManhaleAspNetCore.Repository.AccountRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +35,9 @@ namespace ManhaleAspNetCore
             });
             //add identity
             services.AddIdentity<CustomIdentityUser, CustomerIdentityRole>().AddEntityFrameworkStores<ManahelContext>();
+            //Repository
+            services.AddScoped(typeof(IRepository<>),typeof( Repository<>));
+            services.AddScoped<IRoleRepository, RoleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
