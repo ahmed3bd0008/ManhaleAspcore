@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ManhaleAspNetCore.ModelView.Account;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace ManhaleAspNetCore.Models
 {
-    public class ManahelContext:DbContext
+    public class ManahelContext:IdentityDbContext<CustomIdentityUser,CustomerIdentityRole,string>
     {
         public ManahelContext(DbContextOptions options ):base(options)
         {

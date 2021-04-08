@@ -1,4 +1,5 @@
 using ManhaleAspNetCore.Models;
+using ManhaleAspNetCore.ModelView.Account;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,9 +27,12 @@ namespace ManhaleAspNetCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //conect to database
             services.AddDbContext<ManahelContext>(option =>
             { option.UseSqlServer(Configuration.GetConnectionString("MyConnection"));
             });
+            //add identity
+            services.AddIdentity<CustomIdentityUser, CustomerIdentityRole>().AddEntityFrameworkStores<ManahelContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
