@@ -1,10 +1,11 @@
 using ManhaleAspNetCore.Models;
 using ManhaleAspNetCore.ModelView.Account;
 using ManhaleAspNetCore.Repository;
-using ManhaleAspNetCore.Repository.AccountRepository;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +38,14 @@ namespace ManhaleAspNetCore
             services.AddIdentity<CustomIdentityUser, CustomerIdentityRole>().AddEntityFrameworkStores<ManahelContext>();
             //Repository
             services.AddScoped(typeof(IRepository<>),typeof( Repository<>));
-            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.Configure<IdentityOptions>(option=>
+            {
+                option.Password.RequiredLength = 6;
+                option.Password.RequiredUniqueChars = 0;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireUppercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +65,7 @@ namespace ManhaleAspNetCore
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

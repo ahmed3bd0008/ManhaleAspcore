@@ -13,7 +13,7 @@ namespace ManhaleAspNetCore.Controllers
         private readonly UserManager<CustomIdentityUser> _userManager;
         private readonly SignInManager<CustomIdentityUser> _signInManager;
 
-        public AccountController(UserManager<CustomIdentityUser> userManager,SignInManager<CustomIdentityUser>signInManager)
+        public AccountController(UserManager<CustomIdentityUser> userManager, SignInManager<CustomIdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -27,6 +27,26 @@ namespace ManhaleAspNetCore.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Login(UserLogInViewModel model,string ReturnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RemmberMe, true);
+                if (result.Succeeded)
+                {
+
+                    if (ReturnUrl != null)
+                    {
+                        return LocalRedirect(ReturnUrl);
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "invaild");
+            }
+            return View(model);
+        }
+      
         [HttpGet]
         public IActionResult Regist()
         {
@@ -34,16 +54,41 @@ namespace ManhaleAspNetCore.Controllers
         }
         public async Task< IActionResult> Regist(CreateRegisterUser model )
         {
-            CustomIdentityUser user = new CustomIdentityUser()
+            if (ModelState.IsValid)
             {
-                Email = model.Email,
-                UserName = model.Name,
-                PhoneNumber = model.Phone,
-              
-            };
-          await  _userManager.CreateAsync(user, model.Password);
-          await  _signInManager.SignInAsync(user,isPersistent:false);
+                CustomIdentityUser user = new 
+                     CustomIdentityUser()
+                {
+                    Email = model.Email,
+                    UserName = model.Name,
+                    PhoneNumber = model.Phone,
+
+                };
+              var result=  await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }
+                return RedirectToAction("Index", "Home");
+            }
+           
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult>Logout()
+        {
+            await _signInManager.SignOutAsync();
+                return RedirectToAction("Index","Home");
+        }
+
     }
+
 }

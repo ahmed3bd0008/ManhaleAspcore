@@ -20,7 +20,8 @@ namespace ManhaleAspNetCore.ModelView.Account
         [Required(ErrorMessage = "You must provide a phone number")]
         [Display(Name = "Phone")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+      //  [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+
         public String Phone { get; set; }
     }
 }

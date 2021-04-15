@@ -1,4 +1,5 @@
-﻿@{ 
+﻿@model UserLogInViewModel
+@{ 
     Layout = "_LayoutAccount";
 }
 <div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>
@@ -14,29 +15,33 @@
                     <img src="~/assets/images/logo-icon.png" alt="logo icon">
                 </div>
                 <div class="card-title text-uppercase text-center py-3">Sign In</div>
-                <form>
+                
+                <form method="post" asp-controller="Account" asp-action="Login">
+                    <div asp-validation-summary="All"></div>
                     <div class="form-group">
                         <label for="exampleInputUsername" class="sr-only">Username</label>
                         <div class="position-relative has-icon-right">
-                            <input type="text" id="exampleInputUsername" class="form-control input-shadow" placeholder="Enter Username">
+                            <input asp-for="UserName" type="text" id="exampleInputUsername" class="form-control input-shadow" placeholder="Enter Username">
                             <div class="form-control-position">
                                 <i class="icon-user"></i>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword" class="sr-only">Password</label>
                         <div class="position-relative has-icon-right">
-                            <input type="password" id="exampleInputPassword" class="form-control input-shadow" placeholder="Enter Password">
+                            <input asp-for="Password"  class="form-control input-shadow" placeholder="Enter Password">
                             <div class="form-control-position">
                                 <i class="icon-lock"></i>
                             </div>
                         </div>
+                       
                     </div>
                     <div class="form-row">
                         <div class="form-group col-6">
                             <div class="icheck-material-primary">
-                                <input type="checkbox" id="user-checkbox" checked="" />
+                                <input type="checkbox" asp-for="RemmberMe"  checked="" />
                                 <label for="user-checkbox">Remember me</label>
                             </div>
                         </div>
@@ -44,7 +49,7 @@
                             <a href="authentication-reset-password.html">Reset Password</a>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary btn-block">Sign In</button>
+                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                     <div class="text-center mt-3">Sign In With</div>
 
                     <div class="form-row mt-4">
