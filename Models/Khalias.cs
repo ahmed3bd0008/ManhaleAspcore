@@ -18,6 +18,6 @@ namespace ManhaleAspNetCore.Models
         [ForeignKey("Manhal")]
         public int ManhalId { get; set; }
         public virtual Manahel Manhal { get; set; }
-        public virtual List<Queue> Queues { get; set; }
+        public virtual Queue Queues { get; set; }
     }
 }

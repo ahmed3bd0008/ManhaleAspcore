@@ -1,0 +1,39 @@
+﻿@model List<Tuple<string, double>>
+
+<style>
+    /*.progressParent {
+        width: 90%;
+        border-radius: 10px;
+        background-color: rgba(107, 110, 108, 0.534);
+    }
+
+    .progress {
+        height: 20%;
+        border-radius: 10px;
+        background-color: teal;
+        text-align: center;
+        vertical-align: middle;
+        color: white;
+    }*/
+
+    p {
+        margin: 0px;
+        padding: 0px;
+        font-family: 'Times New Roman', Times, serif
+    }
+</style>
+
+@foreach (var item in Model)
+{
+<div style="margin: 15px;">
+    <p>@item.Item1</p>
+    <div class="progress">
+        <div class="progress-bar bg-warning" style="width:@item.Item2%;">@item.Item2%</div>
+    </div>
+    @*<div class="progressParent">
+        <div class="progress" style="width: @item.Item2%;">
+            <label style="margin:auto">@item.Item2%</label>
+        </div>
+    </div>*@
+</div>
+}

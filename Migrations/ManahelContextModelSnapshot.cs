@@ -182,6 +182,9 @@ namespace ManhaleAspNetCore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Account_ID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -252,7 +255,8 @@ namespace ManhaleAspNetCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KhaliaId");
+                    b.HasIndex("KhaliaId")
+                        .IsUnique();
 
                     b.ToTable("Queues");
                 });
@@ -391,8 +395,8 @@ namespace ManhaleAspNetCore.Migrations
             modelBuilder.Entity("ManhaleAspNetCore.Models.Queue", b =>
                 {
                     b.HasOne("ManhaleAspNetCore.Models.Khalias", "Khalia")
-                        .WithMany("Queues")
-                        .HasForeignKey("KhaliaId")
+                        .WithOne("Queues")
+                        .HasForeignKey("ManhaleAspNetCore.Models.Queue", "KhaliaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

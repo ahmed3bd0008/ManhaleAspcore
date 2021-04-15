@@ -1,0 +1,198 @@
+﻿@model IEnumerable<ManhaleAspNetCore.Models.Manahel>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+<link href="~/css/ManahelStyle.css" rel="stylesheet" />
+
+<h1>Display All Manahel</h1>
+
+<div class="search row">
+    <div class="col-sm-3" style="padding-top:15px">
+        <a asp-action="Create" class="btn btn-success">Add New Manhal</a>
+    </div>
+    <div class="searchDiv col-sm-8">
+        <form asp-action="SearchManhal" asp-controller="Manhal" class="row">
+            <input class="offset-1 col-6 form-control" type="search" name="txtSearch" id="txtSearch" placeholder="Search Manhal Name" />
+            <input type="submit" value="Search" class="col-3 btn btn-secondary" id="btn1">
+        </form>
+    </div>
+</div>
+
+@*Display All Manahel*@
+<div class="MainDiv" style="height:600px" id="MDiv">
+    @foreach (var item in Model)
+    {
+        <div class="ManahBody row">
+            <div class="ManhalImage col-sm-3">
+                <img src="~/assets/images/timeline/t-img-1.jpg" />
+            </div>
+            <div class="ManhalContent col-sm-9">
+                <div class="ManhalInfo row">
+                    <div class="col">
+                        <p>
+                            <span>
+                                @Html.DisplayNameFor(m => item.Ssn)
+                            </span>:
+                            @Html.DisplayFor(m => item.Ssn)
+                        </p>
+                        <p>
+                            <span>@Html.DisplayNameFor(m => item.NickName)</span>:
+                            @Html.DisplayFor(m => item.NickName)
+                        </p>
+                        <p>
+                            <span>@Html.DisplayNameFor(m => item.FlowerName)</span>:
+                            @Html.DisplayFor(m => item.FlowerName)
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p>
+                            @{ string text = item.DateCreated.ToShortDateString();}
+                            <span>@Html.DisplayNameFor(m => item.DateCreated): </span>
+                            @text
+                        </p>
+                        <p>
+                            <span>@Html.DisplayNameFor(m => item.LocationName)</span>:
+                            @Html.DisplayFor(m => item.LocationName)
+                        </p>
+                    </div>
+                </div>
+                <div class="ManhalBtn btn-group">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn bg-secondary">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    <a asp-action="OpenManhal" asp-route-id="@item.Id" class="btn btn-light">Open</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<div style="width:50%;background-color:#AAA;margin:auto;font-size:large;padding:15px 0px">
+    @Html.Partial("_Charts", ViewData["Charts"])
+</div>
+
+<a href="#" onclick="getTop();">Back to top</a>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#btn1").click(function () {
+                alert("btn click");
+                $("#MDiv div").remove();
+                var message = $("#txtSearch").val();
+                if (message != null && message != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("SearchManhal")',
+                        data: '{'+txtSearch+' : ' + JSON.stringify(message) + '}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            $.each(data, function (i, item) {
+                                var row = "<div style='width:800px;height:100px;background-color:#000'>"
+                                +"</div > ";
+                                $(".MainDiv div").append(row);
+                            }
+                        },
+                        error: function () {
+                            alert("Error while load Data");
+                        }
+                    });
+                }
+                else {
+                    alert("Error while load Data");
+                }
+            });
+        });
+    </script>
+}
+
+
+
+@*$(document).ready(function () {
+            $("#btn1").click(function () {
+                alert("btn click");
+                var btnSearch = 0;
+    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("SearchManhal")',
+                        data: '{'+txtSearch+' : ' + JSON.stringify(message) + '}',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            $.each(data, function (i, item) {
+                                var row = "<div style='width:800px;height:100px;background-color:#000'></div>";
+                                $(".MainDiv div").append(row);
+                            }
+                        },
+                        error: function () {
+                            alert("Error while load Data");
+                        }
+                    });
+
+    var row = "<div class='ManahBody row'>"
+                                    + "<div class='ManhalImage col-sm-3'>"
+                                    + "<img src='~/assets/images/timeline/t-img-1.jpg' />"
+                                    + "</div>"
+                                    + "<div class='ManhalContent col-sm-9'>"
+                                    + "<div class='ManhalInfo row'>"
+                                    + "<div class='col'>"
+                                    + "<p>"
+                                    + "<span>Manhal Code</span>:" + item.Ssn
+                                    + "</p>"
+                                    + "<p>"
+                                    + "<span>Name</span>:" + item.NickName
+                                    + "</p>"
+                                    + "<p>"
+                                    + "<span>Flower</span>:" + item.FlowerName
+                                    + "</p>"
+                                    + "</div>"
+                                    + "<div class='col'>"
+                                    + "<p>"
+                                    + "<span>Date Created: </span>" + item.DateCreated
+                                    + "</p>"
+                                    + "<p>"
+                                    + "<span>Location</span>:" + item.LocationName
+                                    + "</p>"
+                                    + "</div>"
+                                    + "</div>"
+                                    + "<div class='ManhalBtn btn-group'>"
+                                    + "<a asp-action='Edit' asp-route-id=" + item.Id + " class='btn btn-success'>Edit</a>"
+                                    + "<a asp-action='Details' asp-route-id=" + item.Id + " class='btn bg-secondary'>Details</a>"
+                                    + "<a asp-action='Delete' asp-route-id=" + item.Id + " class='btn btn-danger'>Delete</a>"
+                                    + "<a asp-action='OpenManhal' asp-route-id=" + item.Id + " class='btn btn-light'>Open</a>"
+                                    + "</div>"
+                                    + "</div>"
+                                    + "</div > ";
+
+
+
+
+
+
+
+            });
+        });*@
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

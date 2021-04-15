@@ -1,0 +1,128 @@
+﻿@using ManhaleAspNetCore.Models;
+@using ManhaleAspNetCore.ModelView.Manahel;
+@model Manahel
+
+@{
+    ViewData["Title"] = "Details";
+   
+}
+
+<h1>Details</h1>
+
+<link href="~/css/ManahelStyle.css" rel="stylesheet" />
+
+@*Display Manahel*@
+<div class="MainDiv">
+    <div class="ManahBody row">
+        <div class="col-sm-7">
+            <h1>The general average of the apiaries <span>@ViewData["Average"]</span></h1>
+            <div class="ManhalInfo row" style="margin-bottom:10px">
+                <div class="col-sm-6">
+                    <p>
+                        <span>
+                            @Html.DisplayNameFor(m => Model.Ssn)
+                        </span>:
+                        @Html.DisplayFor(m => Model.Ssn)
+                    </p>
+                    <p>
+                        <span>@Html.DisplayNameFor(m => Model.NickName)</span>:
+                        @Html.DisplayFor(m => Model.NickName)
+                    </p>
+                    <p>
+                        <span>@Html.DisplayNameFor(m => Model.FlowerName)</span>:
+                        @Html.DisplayFor(m => Model.FlowerName)
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <p>
+                        @{ string text = Model.DateCreated.ToShortDateString();}
+                        <span>@Html.DisplayNameFor(m => Model.DateCreated): </span>
+                        @text
+                    </p>
+                    <p>
+                        @{ string text2 = Model.DateUpdated.ToShortDateString();}
+                        <span>@Html.DisplayNameFor(m => Model.DateUpdated): </span>
+                        @text2
+                    </p>
+                    <p>
+                        <span>@Html.DisplayNameFor(m => Model.LocationName)</span>:
+                        @Html.DisplayFor(m => Model.LocationName)
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col bg-secondary" style="border:3px solid #ffd800">
+                    @{ List<Tuple<string, double>> KCount = ViewData["KhaliaCount"] as List<Tuple<string, double>>;}
+
+                    @foreach (var item in KCount)
+                    {
+                        <p>
+                            <span>
+                                @item.Item1
+                            </span>:
+                            @Html.DisplayFor(m => item.Item2)
+                        </p>
+                    }
+                </div>
+                <div class="col bg-secondary" style="border:3px solid #ffd800">
+                    @{ List<Tuple<string, double>> QCount = ViewData["QueueCount"] as List<Tuple<string, double>>;}
+                    @foreach (var item in QCount)
+                    {
+                        <p>
+                            <span>
+                                @item.Item1
+                            </span>:
+                            @Html.DisplayFor(m => item.Item2)
+                        </p>
+                    }
+                </div>
+            </div><br />
+        </div>
+        <div class="col-sm-5">
+            <div class="bg-secondary" style="margin:auto;font-size:large;padding:15px 0px;margin-bottom:5px">
+                <p style="font-weight:bold;margin-left:30px">The level of cells in the apiary</p>
+                @Html.Partial("_Charts", ViewData["Charts"])
+            </div>
+            <div class="ManhalBtn btn-group">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                <a asp-action="OpenManhal" asp-route-id="@Model.Id" class="btn btn-light">Open</a>
+                <a asp-action="AddImage" asp-route-id="@Model.Id" class="btn btn-success">Add New Image</a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="card-columns">
+    @foreach (var item in Model.ImageManhals)
+    {
+        <div class="card">
+            <div class="card-body text-center">
+                <img class="card-img" src="~/images/@item.ImagesString" />
+                <a asp-action="DeleteImage" asp-route-idImg="@item.Id" asp-route-id="@item.TabelId" class="card-action">Delete</a>
+            </div>
+        </div>
+    }
+    <div class="card">
+        <div class="card-body text-center">
+            @Html.Partial("_AddManhalImage", ViewData["ManhalImage"]);
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        // Add the following code if you want the name of the file appear on select @*href="DeleteImage/item.Id"*@ 
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+    <a href="#" onclick="getTop();">Back to top</a>

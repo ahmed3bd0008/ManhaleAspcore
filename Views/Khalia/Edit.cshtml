@@ -1,0 +1,82 @@
+﻿@model ManhaleAspNetCore.Models.Khalias
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutManhal.cshtml";
+}
+<h1>Edit Khalia </h1>
+<hr />
+<div style="width:90%">
+    <form asp-action="Edit">
+        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+        <div class="row" style="margin:15px;">
+            <div class="col">
+                <label asp-for="Ssn"></label>
+                <input asp-for="Ssn" name="Ssn" class="form-control" />
+                <span asp-validation-for="Ssn" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="KhaliaLevel"></label>
+                <select asp-for="KhaliaLevel"  name="KhaliaLevel" class="form-control" asp-items="ViewBag.KhaliaLevel"></select>
+                <span asp-validation-for="KhaliaLevel" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="KhaliaType"></label>
+                <select asp-for="KhaliaType"  name="KhaliaType" class="form-control" asp-items="ViewBag.KhaliaType"></select>
+                <span asp-validation-for="KhaliaType" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row" style="margin:15px">
+            <div class="col">
+                <label asp-for="Wood" class="control-label"></label>
+                <select asp-for="Wood" name="Wood" class="form-control" asp-items="ViewBag.woodType"></select>
+                <span asp-validation-for="Wood" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="PraweezCount" class="control-label"></label>
+                <input asp-for="PraweezCount"  name="PraweezCount" class="form-control" />
+                <span asp-validation-for="PraweezCount" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes"  name="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="ManhalId" value=@ViewBag.ManhalId />
+
+        <div class="row">
+            <input type="submit" value="Save Changes Khalia" class="btn btn-success offset-1" style="width:400px;outline:none;border-radius:20px" />
+        </div>
+    </form>
+
+    <form asp-action="EditQueue">
+        <div class="row" style="margin:15px">
+            <div class="col">
+                <label asp-for="Queues.QueueStatus" class="control-label"></label>
+                <select asp-for="Queues.QueueStatus" name="QueueStatus" class="form-control" asp-items="ViewBag.QueueStatus"></select>
+                <span asp-validation-for="Queues.QueueStatus" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="Queues.DateFertilization" class="control-label"></label>
+                <input asp-for="Queues.DateFertilization" name="DateFertilization" class="form-control" />
+                <span asp-validation-for="Queues.DateFertilization" class="text-danger"></span>
+            </div>
+        </div>
+        <input type="hidden" name="KhaliaId" @*asp-for="@ViewBag.KhaliaId"*@ value=@ViewBag.KhaliaId />
+        <input type="hidden" name="Id" @*asp-for="@ViewBag.KhaliaId"*@ value=@ViewBag.QueueId />
+        <div class="row">
+            <input type="submit" value="Save Changes Queue" class="btn btn-success offset-1" style="width:400px;outline:none;border-radius:20px" />
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

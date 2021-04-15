@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ManhaleAspNetCore.Models.Khalias>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutManhal.cshtml";
+}
+
+<h1 style="text-align: center; font-variant-caps: all-small-caps; font-family: Arial; font-weight: bold;">Display All Khalia</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Add New Khalia</a>
+</p>
+<table class="table" style="text-align:center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ssn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KhaliaLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KhaliaType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Wood)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PraweezCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Queues.QueueStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ssn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhaliaLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhaliaType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wood)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PraweezCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Queues.QueueStatus)
+            </td>
+            <td>
+                <div class="ManhalBtn btn-group">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

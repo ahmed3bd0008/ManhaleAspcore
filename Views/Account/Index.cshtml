@@ -1,0 +1,27 @@
+﻿@model IEnumerable<CustomIdentityUser>
+
+    <li class="nav-item m-2"><a asp-controller="Account" asp-action="Regist" class="btn btn-primary">Regist</a></li>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>

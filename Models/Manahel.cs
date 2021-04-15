@@ -14,6 +14,7 @@ namespace ManhaleAspNetCore.Models
         public string FlowerName { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
+        public string Account_ID { get; set; }
         public virtual List<Images> ImageManhals { get; set; }
         public virtual List<Khalias> Khaliases { get; set; }
         public virtual List<Product> Products { get; set; }

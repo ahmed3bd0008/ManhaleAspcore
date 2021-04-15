@@ -20,7 +20,8 @@ namespace ManhaleAspNetCore.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+
+            return View(_userManager.Users);
         }
         [HttpGet]
         public IActionResult Login()
@@ -40,7 +41,7 @@ namespace ManhaleAspNetCore.Controllers
                     {
                         return LocalRedirect(ReturnUrl);
                     }
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Manhal");
                 }
                 ModelState.AddModelError(string.Empty, "invaild");
             }
@@ -86,7 +87,7 @@ namespace ManhaleAspNetCore.Controllers
         public async Task<IActionResult>Logout()
         {
             await _signInManager.SignOutAsync();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Account","Index");
         }
 
     }
